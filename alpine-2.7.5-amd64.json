@@ -28,6 +28,8 @@
       "ssh_username": "root",
       "ssh_wait_timeout": "100s",
       "type": "virtualbox-iso",
+      "headless" : true,
+      "hard_drive_interface": "sata",
       "vboxmanage": [
         [
           "modifyvm",

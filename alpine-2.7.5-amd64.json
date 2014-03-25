@@ -20,7 +20,7 @@
       "http_directory": "http",
       "iso_checksum": "87372a39ffcc7ff7868ac6b3b0ebac2fad13e192",
       "iso_checksum_type": "sha1",
-      "iso_url": "{{user `mirror`}}/alpine//v2.7/releases/x86_64/alpine-2.7.5-x86_64.iso",
+      "iso_url": "{{user `mirror`}}/alpine/v2.7/releases/x86_64/alpine-2.7.5-x86_64.iso",
       "output_directory": "alpine-2.7.5-amd64",
       "shutdown_command": "/sbin/poweroff",
       "ssh_password": "vagrant",

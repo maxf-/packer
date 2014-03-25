@@ -1,7 +1,7 @@
 #!/bin/sh -eux
 
 cp /etc/apk/repositories /etc/apk/repositories.orig
-tail -n +2 /etc/apk/repositories.orig > /etc/apk/repositories
+echo "http://mirror.cabtec.net/alpine/v2.7/main" > /etc/apk/repositories
 
 apk update
 apk upgrade

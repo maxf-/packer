@@ -69,6 +69,6 @@
     }
   ],
   "variables": {
-    "mirror": "http://dl-5.alpinelinux.org"
+    "mirror": "http://mirror.cabtec.net"
   }
 }

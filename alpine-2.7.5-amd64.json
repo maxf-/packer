@@ -1,0 +1,72 @@
+{
+  "builders": [
+    {
+      "boot_command": [
+         "root<enter><wait>",
+         "ifconfig eth0 10.0.2.15 netmask 255.255.255.0<enter><wait>",
+         "wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/alpine-2.7.5/answers<enter><wait>",
+         "setup-alpine -f answers<enter><wait10>",
+         "vagrant<enter><wait>",
+         "vagrant<enter><wait10>",
+         "y<enter>",
+         "<wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10>",
+         "/etc/init.d/sshd stop<enter><wait>",
+         "reboot<enter>"
+      ],
+      "boot_wait": "30s",
+      "disk_size": 8192,
+      "guest_additions_mode": "disable",
+      "guest_os_type": "Linux26_64",
+      "http_directory": "http",
+      "iso_checksum": "87372a39ffcc7ff7868ac6b3b0ebac2fad13e192",
+      "iso_checksum_type": "sha1",
+      "iso_url": "{{user `mirror`}}/alpine//v2.7/releases/x86_64/alpine-2.7.5-x86_64.iso",
+      "output_directory": "alpine-2.7.5-amd64",
+      "shutdown_command": "/sbin/poweroff",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_username": "root",
+      "ssh_wait_timeout": "100s",
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "512"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "1"
+        ]
+      ],
+      "virtualbox_version_file": ".vbox_version",
+      "vm_name": "alpine-2.7.5-amd64"
+    }
+  ],
+  "provisioners": [
+    {
+      "execute_command": "/bin/sh '{{.Path}}'",
+      "scripts": [
+        "scripts/alpine/update.sh",
+        "scripts/alpine/sshd.sh",
+        "scripts/alpine/networking.sh",
+        "scripts/alpine/vagrant.sh",
+        "scripts/alpine/sudoers.sh",
+        "scripts/common/minimize.sh"
+      ],
+      "type": "shell"
+    }
+  ],
+  "post-processors": [
+    {
+      "output": "alpine-2.7.5-amd64.box",
+      "type": "vagrant"
+    }
+  ],
+  "variables": {
+    "mirror": "http://dl-5.alpinelinux.org"
+  }
+}

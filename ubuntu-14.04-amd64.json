@@ -30,9 +30,9 @@
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "guest_os_type": "Ubuntu_64",
       "http_directory": "http",
-      "iso_checksum": "82775369ef10a9a2e154b8c7f0624247b1177878",
+      "iso_checksum": "b0288ed9e9af30e13a7eca1a0b6dafe8f9a02085",
       "iso_checksum_type": "sha1",
-      "iso_url": "http://{{user `mirror`}}/ubuntu-server/daily/20140325/trusty-server-amd64.iso",
+      "iso_url": "http://{{user `mirror`}}/ubuntu-server/daily/20140325.2/trusty-server-amd64.iso",
       "output_directory": "ubuntu-14.04-amd64",
       "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
       "ssh_password": "vagrant",
@@ -62,7 +62,7 @@
   ],
   "post-processors": [
     {
-      "output": "20140325-ubuntu-14.04-amd64.box",
+      "output": "20140325.2-ubuntu-14.04-amd64.box",
       "type": "vagrant"
     }
   ],

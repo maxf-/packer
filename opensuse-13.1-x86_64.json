@@ -1,0 +1,51 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "iso_url": "http://download.opensuse.org/distribution/13.1/iso/openSUSE-13.1-DVD-x86_64.iso",
+      "iso_checksum": "1096c9c67fc8a67a94a32d04a15e909d",
+      "iso_checksum_type": "md5",
+      "output_directory": "opensuse-13.1-x86_64",
+      "boot_wait": "10s",
+      "disk_size": 32768,
+      "headless": true,
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "20m",
+      "vm_name": "vagrant",
+      "guest_os_type": "OpenSUSE_64",
+      "http_directory": "http",
+      "hard_drive_interface": "sata",
+      "guest_additions_mode": "disable",
+      "shutdown_command": "echo 'vagrant' | sudo -S /sbin/shutdown -P now",
+      "boot_command": [
+        "<esc><enter><wait>",
+        "linux netsetup=dhcp lang=en_US hostname={{.Name}}",
+        " autoyast=http://{{.HTTPIP}}:{{.HTTPPort}}/opensuse-13.1/autoinst.xml",
+        " textmode=1<wait><enter><wait>"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "output": "opensuse-13.1-x86_64.box",
+      "type": "vagrant"
+    }
+  ],
+  "provisioners": [
+    {
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "scripts": [
+        "scripts/opensuse/update.sh",
+        "scripts/opensuse/services.sh",
+        "scripts/opensuse/networking.sh",
+        "scripts/opensuse/puppet.sh",
+        "scripts/common/sshd.sh",
+        "scripts/common/vagrant.sh",
+        "scripts/common/minimize.sh"
+      ],
+      "type": "shell"
+    }
+  ]
+}

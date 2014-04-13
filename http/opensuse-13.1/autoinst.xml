@@ -90,6 +90,17 @@
   </deploy_image>
   <networking>
     <keep_install_network config:type="boolean">true</keep_install_network>
+    <dns>
+      <dhcp_hostname config:type="boolean">true</dhcp_hostname>
+      <dhcp_resolv config:type="boolean">true</dhcp_resolv>
+    </dns>
+    <interfaces config:type="list">
+      <interface>
+        <bootproto>dhcp</bootproto>
+        <device>eth0</device>        
+        <startmode>onboot</startmode>
+      </interface>
+    </interfaces>
   </networking>
   <general>
     <ask-list config:type="list"/>
@@ -180,6 +191,7 @@
       <package>wget</package>
       <package>curl</package>
       <package>iputils</package>
+      <package>ifplugd</package>
       <package>iproute2</package>
     </packages>
     <do_online_update config:type="boolean">false</do_online_update>
@@ -785,6 +797,15 @@
     </remove-packages>
   </software>
   <scripts>
+    <chroot-scripts config:type="list">
+      <script>
+      <chrooted config:type="boolean">true</chrooted>
+      <source><![CDATA[#!/bin/sh
+rm -f /etc/udev/rules.d/70-persistent-net.rules
+ln -s /dev/null /etc/udev/rules.d/80-net-name-slot.rules
+]]></source>
+      </script>
+    </chroot-scripts>
     <init-scripts config:type="list">
       <script>
         <debug config:type="boolean">true</debug>
@@ -794,8 +815,9 @@
 sed -i -e '/Defaults\s\+env_reset/a Defaults\texempt_group=wheel' /etc/sudoers
 echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 usermod -G wheel -a vagrant
-service network start
-service sshd start
+rm /etc/sysconfig/network/ifcfg-enp*
+service network restart
+service sshd restart
 ]]></source>
       </script>
     </init-scripts>

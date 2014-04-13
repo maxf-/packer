@@ -39,7 +39,6 @@
       "scripts": [
         "scripts/opensuse/update.sh",
         "scripts/opensuse/services.sh",
-        "scripts/opensuse/networking.sh",
         "scripts/opensuse/puppet.sh",
         "scripts/common/sshd.sh",
         "scripts/common/vagrant.sh",
